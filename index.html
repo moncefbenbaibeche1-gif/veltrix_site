@@ -226,7 +226,8 @@ Veltrix © 2026
 </footer>
 
 <script>
-/* ======= سكريبتك الأصلي كما هو ======= */
+
+/* ======= سكريبتك الأصلي ======= */
 document.addEventListener("mousemove",e=>{
 document.body.style.setProperty("--x",e.clientX+"px")
 document.body.style.setProperty("--y",e.clientY+"px")
@@ -237,8 +238,6 @@ function r(){els.forEach(el=>{
 if(el.getBoundingClientRect().top<window.innerHeight-80)
 el.classList.add("show")})}
 window.addEventListener("scroll",r);r();
-
-function sendForm(e){e.preventDefault();ok.classList.remove("hidden")}
 
 let gIndex=0;
 const gTrack=document.getElementById("galleryTrack");
@@ -276,52 +275,9 @@ if(a.getAttribute("href")==="#"+cur) a.classList.add("active");
 });
 });
 
-/* ======= Firebase Auth (مصحح ومدمج) ======= */
 
-const email = document.getElementById("email");
-const pass  = document.getElementById("pass");
-const userBox = document.getElementById("userBox");
-const userName = document.getElementById("userName");
-const dashboard = document.getElementById("dashboard");
+/* ================= AUTH SYSTEM ================= */
 
-function signup(){
-fb.createUserWithEmailAndPassword(auth,email.value,pass.value)
-.then(()=>alert("تم إنشاء الحساب ✅"))
-.catch(e=>{
-if(e.code==="auth/email-already-in-use"){
-alert("هذا الإيميل مسجل من قبل — جرّب Login");
-}else{
-alert(e.message);
-}
-});
-}
-
-
-function login(){
-fb.signInWithEmailAndPassword(auth,email.value,pass.value)
-.then(()=>alert("تم تسجيل الدخول ✅"))
-.catch(e=>alert(e.message));
-}
-
-function logout(){
-fb.signOut(auth);
-}
-
-fb.onAuthStateChanged(auth,user=>{
-if(user){
-userBox.style.display="flex";
-userName.innerText=user.email;
-dashboard.classList.remove("hidden");
-}else{
-userBox.style.display="none";
-dashboard.classList.add("hidden");
-}
-});
-</script>
-
-<script>
-
-/* ===== عناصر ===== */
 const email = document.getElementById("email");
 const pass  = document.getElementById("pass");
 const userBox = document.getElementById("userBox");
@@ -329,11 +285,14 @@ const userName = document.getElementById("userName");
 const userAvatar = document.getElementById("userAvatar");
 const dashboard = document.getElementById("dashboard");
 
-/* ===== قوة كلمة السر ===== */
+/* ===== Password strength ===== */
 function strongPass(p){
-return p.length >= 8 &&
-/[A-Z]/.test(p) &&
-/[0-9]/.test(p);
+return p.length >= 8 && /[A-Z]/.test(p) && /[0-9]/.test(p);
+}
+
+/* ===== Avatar ===== */
+function avatarFromEmail(mail){
+return "https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=" + mail;
 }
 
 /* ===== Signup ===== */
@@ -347,7 +306,7 @@ return;
 fb.createUserWithEmailAndPassword(auth,email.value,pass.value)
 .then(res=>{
 fb.sendEmailVerification(res.user);
-alert("تم إنشاء الحساب ✅ تحقق من الإيميل قبل الدخول");
+alert("تم إنشاء الحساب ✅ تحقق من الإيميل");
 })
 .catch(e=>{
 if(e.code==="auth/email-already-in-use"){
@@ -380,17 +339,12 @@ fb.signOut(auth);
 /* ===== Forgot Password ===== */
 function forgotPass(){
 if(!email.value){
-alert("اكتب الإيميل أولاً");
+alert("اكتب الإيميل");
 return;
 }
 fb.sendPasswordResetEmail(auth,email.value)
-.then(()=>alert("تم إرسال رابط إعادة التعيين 📩"))
+.then(()=>alert("رابط إعادة التعيين أُرسل 📩"))
 .catch(e=>alert(e.message));
-}
-
-/* ===== Avatar من الإيميل ===== */
-function avatarFromEmail(mail){
-return "https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=" + mail;
 }
 
 /* ===== Auth State ===== */
@@ -400,7 +354,6 @@ if(user && user.emailVerified){
 userBox.style.display="flex";
 userName.innerText=user.email;
 userAvatar.src = avatarFromEmail(user.email);
-
 dashboard.classList.remove("hidden");
 
 }else{
@@ -414,6 +367,7 @@ dashboard.classList.add("hidden");
   
 </body>
 </html>
+
 
 
 
