@@ -195,6 +195,7 @@ Veltrix © 2026
 </footer>
 
 <script>
+<script>
 /* ======= سكريبتك الأصلي كما هو ======= */
 document.addEventListener("mousemove",e=>{
 document.body.style.setProperty("--x",e.clientX+"px")
@@ -245,14 +246,24 @@ if(a.getAttribute("href")==="#"+cur) a.classList.add("active");
 });
 });
 
-/* ======= إضافات Firebase Auth فقط ======= */
+/* ======= Firebase Auth (مصحح ومدمج) ======= */
+
+const email = document.getElementById("email");
+const pass  = document.getElementById("pass");
+const userBox = document.getElementById("userBox");
+const userName = document.getElementById("userName");
+const dashboard = document.getElementById("dashboard");
 
 function signup(){
-fb.createUserWithEmailAndPassword(auth,email.value,pass.value);
+fb.createUserWithEmailAndPassword(auth,email.value,pass.value)
+.then(()=>alert("تم إنشاء الحساب ✅"))
+.catch(e=>alert(e.message));
 }
 
 function login(){
-fb.signInWithEmailAndPassword(auth,email.value,pass.value);
+fb.signInWithEmailAndPassword(auth,email.value,pass.value)
+.then(()=>alert("تم تسجيل الدخول ✅"))
+.catch(e=>alert(e.message));
 }
 
 function logout(){
@@ -271,6 +282,8 @@ dashboard.classList.add("hidden");
 });
 </script>
 
+
 </body>
 </html>
+
 
