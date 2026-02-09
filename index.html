@@ -11,7 +11,16 @@
 <!-- ✅ Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+signOut,
+onAuthStateChanged,
+sendPasswordResetEmail,
+sendEmailVerification
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
 apiKey: "AIzaSyDSBaPHp2LCfgIq8gQqxoJcFEKj1X35r4Y",
@@ -22,8 +31,16 @@ appId: "1:597171735950:web:b3882b8c9741fe6ea8e8df"
 
 const app = initializeApp(firebaseConfig);
 window.auth = getAuth(app);
-window.fb = {createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged};
+window.fb = {
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+signOut,
+onAuthStateChanged,
+sendPasswordResetEmail,
+sendEmailVerification
+};
 </script>
+
 
 <style>
 html{scroll-behavior:smooth}
@@ -291,6 +308,7 @@ dashboard.classList.add("hidden");
 
 </body>
 </html>
+
 
 
 
