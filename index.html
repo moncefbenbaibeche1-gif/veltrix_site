@@ -141,9 +141,19 @@ backdrop-filter:blur(8px);transform:translateZ(60px);}
 
 <!-- ✅ user box -->
 <div id="userBox" class="hidden items-center gap-4">
+
+<img id="userAvatar"
+class="w-9 h-9 rounded-full border border-white/20">
+
 <span id="userName" class="text-cyan-400 font-bold"></span>
-<button onclick="logout()" class="bg-red-600 px-4 py-2 rounded-xl">Logout</button>
+
+<button onclick="logout()"
+class="bg-red-600 px-4 py-2 rounded-xl">
+Logout
+</button>
+
 </div>
+
 
 <a href="#join" class="px-5 py-2 rounded-xl bg-gradient-to-r from-fuchsia-600 to-cyan-500 font-bold">
 انضم الآن
@@ -196,6 +206,10 @@ backdrop-filter:blur(8px);transform:translateZ(60px);}
 <div class="flex gap-4">
 <button onclick="signup()" class="w-full py-3 rounded-xl bg-fuchsia-600">Sign Up</button>
 <button onclick="login()" class="w-full py-3 rounded-xl bg-cyan-600">Login</button>
+<button onclick="forgotPass()" class="text-sm text-cyan-400 mt-3 w-full">
+Forgot Password؟
+</button>
+
 </div>
 
 </div>
@@ -305,9 +319,102 @@ dashboard.classList.add("hidden");
 });
 </script>
 
+<script>
 
+/* ===== عناصر ===== */
+const email = document.getElementById("email");
+const pass  = document.getElementById("pass");
+const userBox = document.getElementById("userBox");
+const userName = document.getElementById("userName");
+const userAvatar = document.getElementById("userAvatar");
+const dashboard = document.getElementById("dashboard");
+
+/* ===== قوة كلمة السر ===== */
+function strongPass(p){
+return p.length >= 8 &&
+/[A-Z]/.test(p) &&
+/[0-9]/.test(p);
+}
+
+/* ===== Signup ===== */
+function signup(){
+
+if(!strongPass(pass.value)){
+alert("كلمة السر ضعيفة ❌ لازم 8 أحرف + رقم + حرف كبير");
+return;
+}
+
+fb.createUserWithEmailAndPassword(auth,email.value,pass.value)
+.then(res=>{
+fb.sendEmailVerification(res.user);
+alert("تم إنشاء الحساب ✅ تحقق من الإيميل قبل الدخول");
+})
+.catch(e=>{
+if(e.code==="auth/email-already-in-use"){
+alert("الإيميل مسجل — استعمل Login");
+}else{
+alert(e.message);
+}
+});
+}
+
+/* ===== Login ===== */
+function login(){
+fb.signInWithEmailAndPassword(auth,email.value,pass.value)
+.then(res=>{
+if(!res.user.emailVerified){
+alert("فعّل الإيميل أولاً 📩");
+fb.signOut(auth);
+return;
+}
+alert("تم تسجيل الدخول ✅");
+})
+.catch(e=>alert(e.message));
+}
+
+/* ===== Logout ===== */
+function logout(){
+fb.signOut(auth);
+}
+
+/* ===== Forgot Password ===== */
+function forgotPass(){
+if(!email.value){
+alert("اكتب الإيميل أولاً");
+return;
+}
+fb.sendPasswordResetEmail(auth,email.value)
+.then(()=>alert("تم إرسال رابط إعادة التعيين 📩"))
+.catch(e=>alert(e.message));
+}
+
+/* ===== Avatar من الإيميل ===== */
+function avatarFromEmail(mail){
+return "https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=" + mail;
+}
+
+/* ===== Auth State ===== */
+fb.onAuthStateChanged(auth,user=>{
+if(user && user.emailVerified){
+
+userBox.style.display="flex";
+userName.innerText=user.email;
+userAvatar.src = avatarFromEmail(user.email);
+
+dashboard.classList.remove("hidden");
+
+}else{
+userBox.style.display="none";
+dashboard.classList.add("hidden");
+}
+});
+
+</script>
+
+  
 </body>
 </html>
+
 
 
 
