@@ -256,8 +256,15 @@ const dashboard = document.getElementById("dashboard");
 function signup(){
 fb.createUserWithEmailAndPassword(auth,email.value,pass.value)
 .then(()=>alert("تم إنشاء الحساب ✅"))
-.catch(e=>alert(e.message));
+.catch(e=>{
+if(e.code==="auth/email-already-in-use"){
+alert("هذا الإيميل مسجل من قبل — جرّب Login");
+}else{
+alert(e.message);
 }
+});
+}
+
 
 function login(){
 fb.signInWithEmailAndPassword(auth,email.value,pass.value)
@@ -284,6 +291,7 @@ dashboard.classList.add("hidden");
 
 </body>
 </html>
+
 
 
 
