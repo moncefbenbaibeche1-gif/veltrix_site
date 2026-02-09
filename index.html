@@ -156,6 +156,91 @@ Veltrix نادي تقني يركز على الإلكترونيات والروب�
 </div>
 
 </section>
+<!-- FEATURES -->
+<section id="features" class="py-24 px-6 max-w-6xl mx-auto">
+<h2 class="text-4xl font-black text-center mb-16 reveal">لماذا Veltrix؟</h2>
+
+<div class="grid md:grid-cols-3 gap-8">
+
+<div class="img-card border border-white/10 reveal">
+<img src="https://images.unsplash.com/photo-1526378722484-bd91ca387e72" class="h-48 w-full object-cover">
+<div class="img-overlay"><h3>مسابقات</h3></div>
+</div>
+
+<div class="img-card border border-white/10 reveal">
+<img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c" class="h-48 w-full object-cover">
+<div class="img-overlay"><h3>ورشات</h3></div>
+</div>
+
+<div class="img-card border border-white/10 reveal">
+<img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1" class="h-48 w-full object-cover">
+<div class="img-overlay"><h3>AI + IoT</h3></div>
+</div>
+
+</div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="py-24 px-6 max-w-6xl mx-auto">
+<h2 class="text-4xl font-black text-center mb-16 reveal">مشاريع الأعضاء</h2>
+
+<div class="grid md:grid-cols-3 gap-8">
+
+<div class="img-card border border-white/10 reveal">
+<img src="https://images.unsplash.com/photo-1561144257-e32e8efc6c4f" class="h-48 w-full object-cover">
+<div class="img-overlay"><h3>ذراع روبوتية</h3></div>
+</div>
+
+<div class="img-card border border-white/10 reveal">
+<img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231" class="h-48 w-full object-cover">
+<div class="img-overlay"><h3>متتبع شمسي</h3></div>
+</div>
+
+<div class="img-card border border-white/10 reveal">
+<img src="https://images.unsplash.com/photo-1558002038-1055907df827" class="h-48 w-full object-cover">
+<div class="img-overlay"><h3>منزل ذكي</h3></div>
+</div>
+
+</div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="py-24 px-6 max-w-6xl mx-auto">
+<h2 class="text-4xl font-black text-center mb-16 reveal">معرض الصور</h2>
+
+<div class="gallery-container border border-white/10 reveal">
+<div id="galleryTrack" class="gallery-track">
+<img src="https://images.unsplash.com/photo-1518770660439-4636190af475">
+<img src="https://images.unsplash.com/photo-1561144257-e32e8efc6c4f">
+<img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231">
+</div>
+
+<button class="gallery-btn right-4" onclick="galleryPrev()">❮</button>
+<button class="gallery-btn left-4" onclick="galleryNext()">❯</button>
+</div>
+</section>
+
+<!-- JOIN -->
+<section id="join" class="py-24 px-6 grid place-items-center">
+<div class="w-full max-w-md bg-white/5 backdrop-blur border border-white/10 p-8 rounded-3xl reveal">
+
+<h2 class="text-2xl font-bold text-center mb-8">طلب الانضمام</h2>
+
+<form class="space-y-5" onsubmit="sendForm(event)">
+<input placeholder="الإسم الكامل" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10">
+<input required placeholder="البريد الإلكتروني" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10">
+<input required placeholder="رقم التسجيل" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10">
+<input placeholder="الهاتف" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/10">
+
+<button class="w-full py-3 rounded-xl bg-gradient-to-r from-fuchsia-600 to-cyan-500 font-bold">
+إرسال الطلب
+</button>
+</form>
+
+<p id="ok" class="hidden text-green-400 text-center mt-4">تم الإرسال ✅</p>
+
+</div>
+</section>
 
 <!-- FEATURES / PROJECTS / GALLERY / JOIN -->
 <!-- (كل سكاشنك كما هو — لم يُحذف أي شيء) -->
@@ -229,3 +314,4 @@ document.body.style.setProperty("--y",e.clientY+"px")
 
 </body>
 </html>
+
