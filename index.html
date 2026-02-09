@@ -105,9 +105,16 @@ backdrop-filter:blur(8px);transform:translateZ(60px);}
 <a href="#join" class="nav-link">انضم</a>
 </div>
 
-<a href="#join" class="px-5 py-2 rounded-xl bg-gradient-to-r from-fuchsia-600 to-cyan-500 font-bold">
-انضم الآن
-</a>
+<div class="flex gap-3">
+<button onclick="openAuth('signup')" class="px-4 py-2 rounded-xl bg-gradient-to-r from-fuchsia-600 to-cyan-500 font-bold">
+Sign up
+</button>
+
+<button onclick="openAuth('login')" class="px-4 py-2 rounded-xl border border-white/20">
+Login
+</button>
+</div>
+
 
 </div>
 </nav>
@@ -289,5 +296,98 @@ if(a.getAttribute("href")==="#"+cur) a.classList.add("active")
 })
 </script>
 
+<!-- AUTH MODAL -->
+<div id="authModal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">
+  <div class="bg-slate-900 border border-white/10 rounded-2xl p-8 w-full max-w-md relative">
+
+    <button onclick="closeAuth()" class="absolute left-4 top-4 text-white/50">✕</button>
+
+    <h2 id="authTitle" class="text-2xl font-bold mb-6 text-center">Login</h2>
+
+    <form onsubmit="handleAuth(event)" class="space-y-4">
+      <input id="authEmail" type="email" required placeholder="Email"
+        class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-white/10">
+
+      <input id="authPass" type="password" required placeholder="Password"
+        class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-white/10">
+
+      <button class="w-full py-3 rounded-xl bg-gradient-to-r from-fuchsia-600 to-cyan-500 font-bold">
+        Continue
+      </button>
+    </form>
+
+    <p id="authMsg" class="text-center text-sm mt-4 text-red-400"></p>
+
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDSBaPHp2LCfgIq8gQqxoJcFEKj1X35r4Y",
+  authDomain: "veltrix-f6f9c.firebaseapp.com",
+  projectId: "veltrix-f6f9c",
+  storageBucket: "veltrix-f6f9c.firebasestorage.app",
+  messagingSenderId: "597171735950",
+  appId: "1:597171735950:web:b3882b8c9741fe6ea8e8df",
+  measurementId: "G-5PSH8YEPT5"
+};
+
+const app = initializeApp(firebaseConfig);
+window.auth = getAuth(app);
+window.fbCreate = createUserWithEmailAndPassword;
+window.fbLogin = signInWithEmailAndPassword;
+</script>
+
+<script>
+let authMode = "login";
+
+function openLogin(){
+  authMode = "login";
+  authTitle.innerText = "Login";
+  authActionBtn.innerText = "Login";
+  authModal.classList.remove("hidden");
+  authModal.classList.add("flex");
+}
+
+function openSignup(){
+  authMode = "signup";
+  authTitle.innerText = "Sign Up";
+  authActionBtn.innerText = "Create Account";
+  authModal.classList.remove("hidden");
+  authModal.classList.add("flex");
+}
+
+function closeAuth(){
+  authModal.classList.add("hidden");
+  authModal.classList.remove("flex");
+}
+
+authActionBtn.onclick = async () => {
+  const email = authEmail.value;
+  const pass = authPass.value;
+
+  try{
+    if(authMode === "signup"){
+      await fbCreate(auth, email, pass);
+      authMsg.innerText = "Account created ✅";
+    }else{
+      await fbLogin(auth, email, pass);
+      authMsg.innerText = "Logged in ✅";
+    }
+  }catch(e){
+    authMsg.innerText = e.message;
+  }
+};
+</script>
+
+
 </body>
 </html>
+
